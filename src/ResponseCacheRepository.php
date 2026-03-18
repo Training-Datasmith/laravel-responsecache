@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache;
 
 use Closure;
@@ -14,7 +16,7 @@ class ResponseCacheRepository
         protected Serializer $responseSerializer,
         protected Repository $cache,
     ) {
-        //
+
     }
 
     public function put(string $key, Response $response, int $seconds): void

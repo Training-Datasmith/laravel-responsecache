@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
-use Spatie\ResponseCache\Events\CacheMissedEvent;
-use Spatie\ResponseCache\Events\ResponseCacheHitEvent;
-use Spatie\ResponseCache\Facades\ResponseCache;
 
 use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertTrue;
+
+use Spatie\ResponseCache\Events\CacheMissedEvent;
+
+use Spatie\ResponseCache\Events\ResponseCacheHitEvent;
+use Spatie\ResponseCache\Facades\ResponseCache;
 
 it('will cache a get request', function () {
     $firstResponse = $this->get('/random');

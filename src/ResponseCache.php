@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache;
 
 use Closure;
@@ -22,7 +24,7 @@ class ResponseCache
         protected RequestHasher $hasher,
         protected CacheProfile $cacheProfile,
     ) {
-        //
+
     }
 
     public function enabled(Request $request): bool
@@ -83,13 +85,13 @@ class ResponseCache
 
     public function clear(array $tags = []): bool
     {
-        event(new ClearingResponseCacheEvent);
+        event(new ClearingResponseCacheEvent());
 
         $result = $this->taggedCache($tags)->clear();
 
         $resultEvent = $result
-            ? new ClearedResponseCacheEvent
-            : new ClearingResponseCacheFailedEvent;
+            ? new ClearedResponseCacheEvent()
+            : new ClearingResponseCacheFailedEvent();
 
         event($resultEvent);
 
@@ -101,12 +103,12 @@ class ResponseCache
      */
     public function forget(string|array $uris, array $tags = []): self
     {
-        event(new ClearingResponseCacheEvent);
+        event(new ClearingResponseCacheEvent());
 
         $uris = is_array($uris) ? $uris : [$uris];
         $this->selectCachedItems()->forUrls($uris)->usingTags($tags)->forget();
 
-        event(new ClearedResponseCacheEvent);
+        event(new ClearedResponseCacheEvent());
 
         return $this;
     }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache\Serializers;
 
 use Illuminate\Http\Response as IlluminateResponse;

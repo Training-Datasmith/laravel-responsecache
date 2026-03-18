@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache\CacheItemSelector;
 
 use Illuminate\Http\Request;
@@ -61,7 +63,7 @@ abstract class AbstractRequestBuilder
         $this->server = collect($this->server)
             ->filter(fn (string $val, string $key): bool => ! str_starts_with($key, 'HTTP_'))
             ->merge(collect($headers)
-                ->mapWithKeys(fn(string $val, string $key) => ['HTTP_'.str_replace('-', '_', Str::upper($key)) => $val]))
+                ->mapWithKeys(fn (string $val, string $key) => ['HTTP_'.str_replace('-', '_', Str::upper($key)) => $val]))
             ->toArray();
 
         return $this;

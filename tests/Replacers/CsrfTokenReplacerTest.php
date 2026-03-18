@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Spatie\ResponseCache\Replacers\CsrfTokenReplacer;
 
 it('will refresh csrf token on cached response', function () {

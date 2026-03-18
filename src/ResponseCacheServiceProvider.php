@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache;
 
 use Illuminate\Cache\Repository;
@@ -28,11 +30,11 @@ class ResponseCacheServiceProvider extends PackageServiceProvider
     {
         $this->app->singleton(CacheResponse::class);
 
-        $this->app->bind(CacheProfile::class, fn(Container $app) => $app->make(config('responsecache.cache_profile')));
+        $this->app->bind(CacheProfile::class, fn (Container $app) => $app->make(config('responsecache.cache_profile')));
 
-        $this->app->bind(RequestHasher::class, fn(Container $app) => $app->make(config('responsecache.hasher')));
+        $this->app->bind(RequestHasher::class, fn (Container $app) => $app->make(config('responsecache.hasher')));
 
-        $this->app->bind(Serializer::class, fn(Container $app) => $app->make(config('responsecache.serializer')));
+        $this->app->bind(Serializer::class, fn (Container $app) => $app->make(config('responsecache.serializer')));
 
         $this->app->when(ResponseCacheRepository::class)
             ->needs(Repository::class)

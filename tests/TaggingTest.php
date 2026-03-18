@@ -1,9 +1,12 @@
 <?php
 
-use Spatie\ResponseCache\Test\Concerns\CanChangeCacheStore;
+declare(strict_types=1);
 
 use function PHPUnit\Framework\assertThat;
+
 use function PHPUnit\Framework\isTrue;
+
+use Spatie\ResponseCache\Test\Concerns\CanChangeCacheStore;
 
 uses(CanChangeCacheStore::class);
 

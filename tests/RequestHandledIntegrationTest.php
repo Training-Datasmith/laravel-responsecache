@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Support\Facades\Route;
 use Spatie\ResponseCache\Middlewares\CacheResponse;

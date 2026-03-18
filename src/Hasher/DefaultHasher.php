@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache\Hasher;
 
 use Illuminate\Http\Request;
@@ -10,7 +12,7 @@ class DefaultHasher implements RequestHasher
     public function __construct(
         protected CacheProfile $cacheProfile,
     ) {
-        //
+
     }
 
     public function getHashFor(Request $request): string

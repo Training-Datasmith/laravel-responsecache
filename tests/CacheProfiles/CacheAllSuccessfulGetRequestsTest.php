@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Http\JsonResponse;
-use Spatie\ResponseCache\CacheProfiles\CacheAllSuccessfulGetRequests;
-use Spatie\ResponseCache\Test\User;
 
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertFalse;
+
 use function PHPUnit\Framework\assertTrue;
+
+use Spatie\ResponseCache\CacheProfiles\CacheAllSuccessfulGetRequests;
+use Spatie\ResponseCache\Test\User;
 
 beforeEach(function () {
     $this->cacheProfile = app(CacheAllSuccessfulGetRequests::class);

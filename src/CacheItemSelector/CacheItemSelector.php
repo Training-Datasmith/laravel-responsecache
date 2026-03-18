@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache\CacheItemSelector;
 
 use Spatie\ResponseCache\Concerns\TaggedCacheAware;
@@ -17,7 +19,8 @@ class CacheItemSelector extends AbstractRequestBuilder
     public function __construct(
         protected RequestHasher $hasher,
         protected ResponseCacheRepository $cache,
-    ) {}
+    ) {
+    }
 
     public function usingTags(string|array $tags): static
     {

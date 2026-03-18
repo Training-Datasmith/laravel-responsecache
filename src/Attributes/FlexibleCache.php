@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache\Attributes;
 
 use Attribute;
@@ -11,5 +13,6 @@ class FlexibleCache
         public int $lifetime,
         public int $grace,
         public array $tags = [],
-    ) {}
+    ) {
+    }
 }

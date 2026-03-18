@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Http\Request;
-use Spatie\ResponseCache\CacheItemSelector\AbstractRequestBuilder;
 
 use function PHPUnit\Framework\assertEquals;
+
+use Spatie\ResponseCache\CacheItemSelector\AbstractRequestBuilder;
 
 beforeAll(function () {
     class RequestBuilder extends AbstractRequestBuilder
@@ -35,7 +38,7 @@ it('request builder works', function () {
 
     $cacheNameSuffix = 'suffix';
 
-    $request = (new RequestBuilder)
+    $request = (new RequestBuilder())
         ->withParameters($parameters)
         ->withHeaders($headers)
         ->withCookies($cookies)
@@ -59,7 +62,7 @@ it('request builder works', function () {
     assertEquals($request->ip(), '127.0.1.1');
     assertEquals($request->attributes->get('responsecache.cacheNameSuffix'), $cacheNameSuffix);
 
-    $request = (new RequestBuilder)
+    $request = (new RequestBuilder())
         ->withPostMethod()
         ->withParameters($parameters)
         ->withHeaders($headers)

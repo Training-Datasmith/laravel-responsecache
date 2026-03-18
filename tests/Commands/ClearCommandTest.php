@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Cache\Repository;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Event;
-use Spatie\ResponseCache\Events\ClearedResponseCacheEvent;
-use Spatie\ResponseCache\Events\ClearingResponseCacheEvent;
-use Spatie\ResponseCache\ResponseCacheRepository;
 
 use function PHPUnit\Framework\assertNull;
+
+use Spatie\ResponseCache\Events\ClearedResponseCacheEvent;
+use Spatie\ResponseCache\Events\ClearingResponseCacheEvent;
+
+use Spatie\ResponseCache\ResponseCacheRepository;
 
 beforeEach(function () {
     $this->createTaggableResponseCacheStore = function ($tag): Repository {

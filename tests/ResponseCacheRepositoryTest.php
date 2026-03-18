@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Cache\Repository;
 use Illuminate\Testing\TestResponse;
 use Spatie\ResponseCache\Exceptions\CouldNotUnserialize;

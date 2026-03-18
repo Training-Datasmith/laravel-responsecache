@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache\Attributes;
 
 use Attribute;
@@ -10,5 +12,6 @@ class Cache
     public function __construct(
         public ?int $lifetime = null,
         public array $tags = [],
-    ) {}
+    ) {
+    }
 }

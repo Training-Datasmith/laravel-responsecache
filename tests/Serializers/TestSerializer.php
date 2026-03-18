@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache\Test\Serializers;
 
 use Illuminate\Http\JsonResponse;

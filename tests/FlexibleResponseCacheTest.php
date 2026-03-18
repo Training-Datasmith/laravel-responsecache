@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;

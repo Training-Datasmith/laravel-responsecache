@@ -1,21 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache\Test;
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+
+use function Illuminate\Support\minutes;
+use function Illuminate\Support\seconds;
+
 use Illuminate\Support\Str;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Spatie\ResponseCache\Facades\ResponseCache;
 use Spatie\ResponseCache\Middlewares\CacheResponse;
 use Spatie\ResponseCache\Middlewares\DoNotCacheResponse;
+
 use Spatie\ResponseCache\Middlewares\FlexibleCacheResponse;
 use Spatie\ResponseCache\ResponseCacheServiceProvider;
-
-use function Illuminate\Support\minutes;
-use function Illuminate\Support\seconds;
 
 abstract class TestCase extends Orchestra
 {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spatie\ResponseCache\Middlewares;
 
 use Carbon\CarbonInterval;
@@ -21,7 +23,8 @@ class FlexibleCacheResponse extends BaseCacheMiddleware
 {
     public function __construct(
         protected ResponseCache $responseCache,
-    ) {}
+    ) {
+    }
 
     public function handle(Request $request, Closure $next, ...$args): Response
     {
