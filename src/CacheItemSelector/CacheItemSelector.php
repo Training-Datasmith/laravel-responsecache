@@ -36,11 +36,11 @@ class CacheItemSelector extends AbstractRequestBuilder
     public function forget(): void
     {
         collect($this->urls)
-            ->map(function ($uri) {
+            ->map(function (string $uri): string {
                 $request = $this->build($uri);
 
                 return $this->hasher->getHashFor($request);
             })
-            ->each(fn ($hash) => $this->taggedCache($this->tags)->forget($hash));
+            ->each(fn (string $hash): bool => $this->taggedCache($this->tags)->forget($hash));
     }
 }

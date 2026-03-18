@@ -33,7 +33,7 @@ class ResponseCacheRepository
         $result = $this->cache->flexible(
             $key,
             $seconds,
-            function () use ($callback) {
+            function () use ($callback): string {
                 $response = $callback();
 
                 return $this->responseSerializer->serialize($response);

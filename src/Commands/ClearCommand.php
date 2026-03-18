@@ -21,9 +21,9 @@ class ClearCommand extends Command
     protected function clear()
     {
         if ($url = $this->option('url')) {
-            return ResponseCache::forget($url);
+            return (new ResponseCache())->forget($url);
         }
 
-        ResponseCache::clear();
+        (new ResponseCache())->clear();
     }
 }

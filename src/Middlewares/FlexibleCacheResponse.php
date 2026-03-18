@@ -71,7 +71,7 @@ class FlexibleCacheResponse extends BaseCacheMiddleware
             $response = $this->responseCache->flexible(
                 $cacheKey,
                 [$flexibleTime[0], $flexibleTime[1]],
-                function () use ($request, $next, &$wasMiss) {
+                function () use ($request, $next, &$wasMiss): object {
                     $wasMiss = true;
                     $response = $next($request);
 

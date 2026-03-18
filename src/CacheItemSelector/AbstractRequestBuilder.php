@@ -59,11 +59,9 @@ abstract class AbstractRequestBuilder
     public function withHeaders(array $headers): static
     {
         $this->server = collect($this->server)
-            ->filter(fn (string $val, string $key) => ! str_starts_with($key, 'HTTP_'))
+            ->filter(fn (string $val, string $key): bool => ! str_starts_with($key, 'HTTP_'))
             ->merge(collect($headers)
-                ->mapWithKeys(function (string $val, string $key) {
-                    return ['HTTP_'.str_replace('-', '_', Str::upper($key)) => $val];
-                }))
+                ->mapWithKeys(fn(string $val, string $key) => ['HTTP_'.str_replace('-', '_', Str::upper($key)) => $val]))
             ->toArray();
 
         return $this;

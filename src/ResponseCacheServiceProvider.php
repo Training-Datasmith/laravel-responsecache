@@ -24,21 +24,15 @@ class ResponseCacheServiceProvider extends PackageServiceProvider
             ]);
     }
 
-    public function packageBooted()
+    public function packageBooted(): void
     {
         $this->app->singleton(CacheResponse::class);
 
-        $this->app->bind(CacheProfile::class, function (Container $app) {
-            return $app->make(config('responsecache.cache_profile'));
-        });
+        $this->app->bind(CacheProfile::class, fn(Container $app) => $app->make(config('responsecache.cache_profile')));
 
-        $this->app->bind(RequestHasher::class, function (Container $app) {
-            return $app->make(config('responsecache.hasher'));
-        });
+        $this->app->bind(RequestHasher::class, fn(Container $app) => $app->make(config('responsecache.hasher')));
 
-        $this->app->bind(Serializer::class, function (Container $app) {
-            return $app->make(config('responsecache.serializer'));
-        });
+        $this->app->bind(Serializer::class, fn(Container $app) => $app->make(config('responsecache.serializer')));
 
         $this->app->when(ResponseCacheRepository::class)
             ->needs(Repository::class)

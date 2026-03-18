@@ -52,7 +52,7 @@ class CacheAllSuccessfulGetRequests extends BaseCacheProfile
     {
         $contentType = $response->headers->get('Content-Type', '');
 
-        if (str_starts_with($contentType, 'text/')) {
+        if (str_starts_with((string) $contentType, 'text/')) {
             return true;
         }
 
