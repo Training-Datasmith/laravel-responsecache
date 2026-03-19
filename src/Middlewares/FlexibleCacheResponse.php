@@ -127,7 +127,7 @@ class FlexibleCacheResponse extends BaseCacheMiddleware
                 return null;
             }
 
-            $config = unserialize($decoded);
+            $config = unserialize($decoded, ['allowed_classes' => [FlexibleCacheConfiguration::class]]);
 
             return $config instanceof FlexibleCacheConfiguration ? $config : null;
         } catch (Throwable) {

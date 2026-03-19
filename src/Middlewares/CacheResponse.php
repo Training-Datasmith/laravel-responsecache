@@ -162,7 +162,7 @@ class CacheResponse extends BaseCacheMiddleware
                 return null;
             }
 
-            $config = unserialize($decoded);
+            $config = unserialize($decoded, ['allowed_classes' => [CacheConfiguration::class]]);
 
             return $config instanceof CacheConfiguration ? $config : null;
         } catch (Throwable) {
