@@ -1,58 +1,37 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Spatie\Response_Cache\Replacers;
 
-namespace Spatie\ResponseCache\Replacers;
-
-use Symfony\Component\HttpFoundation\Response;
-
-class CsrfTokenReplacer implements Replacer
+use Symfony\Component\Http_Foundation\Response;
+class Csrf_Token_Replacer implements Replacer
 {
-    protected string $replacementString = '<laravel-responsecache-csrf-token-here>';
-
-    public function prepareResponseToCache(Response $response): void
+    protected string $replacement_string = '<laravel-responsecache-csrf-token-here>';
+    public function prepare_response_to_cache(Response $response): void
     {
-        $content = $response->getContent();
-
-        if (! $content) {
+        $content = $response->get_content();
+        if (!$content) {
             return;
         }
-
-        $csrfToken = csrf_token();
-
-        if (! $csrfToken) {
+        $csrf_token = csrf_token();
+        if (!$csrf_token) {
             return;
         }
-
-        if (! str_contains($content, $csrfToken)) {
+        if (!str_contains($content, $csrf_token)) {
             return;
         }
-
-        $response->setContent(str_replace(
-            $csrfToken,
-            $this->replacementString,
-            $content,
-        ));
+        $response->set_content(str_replace($csrf_token, $this->replacement_string, $content));
     }
-
-    public function replaceInCachedResponse(Response $response): void
+    public function replace_in_cached_response(Response $response): void
     {
-        $content = $response->getContent();
-
-        if (! $content || ! str_contains($content, $this->replacementString)) {
+        $content = $response->get_content();
+        if (!$content || !str_contains($content, $this->replacement_string)) {
             return;
         }
-
-        $csrfToken = csrf_token();
-
-        if (! $csrfToken) {
+        $csrf_token = csrf_token();
+        if (!$csrf_token) {
             return;
         }
-
-        $response->setContent(str_replace(
-            $this->replacementString,
-            $csrfToken,
-            $content,
-        ));
+        $response->set_content(str_replace($this->replacement_string, $csrf_token, $content));
     }
 }

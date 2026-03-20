@@ -1,9 +1,8 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Spatie\Response_Cache\Events;
 
-namespace Spatie\ResponseCache\Events;
-
-class ClearedResponseCacheEvent
+class Cleared_Response_Cache_Event
 {
 }

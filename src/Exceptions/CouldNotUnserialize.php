@@ -1,21 +1,17 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Spatie\ResponseCache\Exceptions;
+declare (strict_types=1);
+namespace Spatie\Response_Cache\Exceptions;
 
 use Exception;
-
-class CouldNotUnserialize extends Exception
+class Could_Not_Unserialize extends Exception
 {
-    public static function serializedResponse(string $serializedResponse): self
+    public static function serialized_response(string $serialized_response): self
     {
-        $truncated = mb_substr($serializedResponse, 0, 200);
-
-        if (mb_strlen($serializedResponse) > 200) {
+        $truncated = mb_substr($serialized_response, 0, 200);
+        if (mb_strlen($serialized_response) > 200) {
             $truncated .= '... (truncated)';
         }
-
         return new self("Could not unserialize serialized response `{$truncated}`");
     }
 }

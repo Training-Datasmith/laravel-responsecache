@@ -1,123 +1,84 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Spatie\ResponseCache;
+declare (strict_types=1);
+namespace Spatie\Response_Cache;
 
 use Closure;
 use Illuminate\Http\Request;
-use Spatie\ResponseCache\CacheItemSelector\CacheItemSelector;
-use Spatie\ResponseCache\CacheProfiles\CacheProfile;
-use Spatie\ResponseCache\Concerns\TaggedCacheAware;
-use Spatie\ResponseCache\Events\ClearedResponseCacheEvent;
-use Spatie\ResponseCache\Events\ClearingResponseCacheEvent;
-use Spatie\ResponseCache\Events\ClearingResponseCacheFailedEvent;
-use Spatie\ResponseCache\Hasher\RequestHasher;
-use Symfony\Component\HttpFoundation\Response;
-
-class ResponseCache
+use Spatie\Response_Cache\Cache_Item_Selector\Cache_Item_Selector;
+use Spatie\Response_Cache\Cache_Profiles\Cache_Profile;
+use Spatie\Response_Cache\Concerns\Tagged_Cache_Aware;
+use Spatie\Response_Cache\Events\Cleared_Response_Cache_Event;
+use Spatie\Response_Cache\Events\Clearing_Response_Cache_Event;
+use Spatie\Response_Cache\Events\Clearing_Response_Cache_Failed_Event;
+use Spatie\Response_Cache\Hasher\Request_Hasher;
+use Symfony\Component\Http_Foundation\Response;
+class Response_Cache
 {
-    use TaggedCacheAware;
-
-    public function __construct(
-        protected ResponseCacheRepository $cache,
-        protected RequestHasher $hasher,
-        protected CacheProfile $cacheProfile,
-    ) {
-
+    use Tagged_Cache_Aware;
+    public function __construct(protected Response_Cache_Repository $cache, protected Request_Hasher $hasher, protected Cache_Profile $cache_profile)
+    {
     }
-
     public function enabled(Request $request): bool
     {
-        return $this->cacheProfile->enabled($request);
+        return $this->cache_profile->enabled($request);
     }
-
-    public function shouldCache(Request $request, Response $response): bool
+    public function should_cache(Request $request, Response $response): bool
     {
         if ($request->attributes->has('responsecache.doNotCache')) {
             return false;
         }
-
-        if (! $this->cacheProfile->shouldCacheRequest($request)) {
+        if (!$this->cache_profile->should_cache_request($request)) {
             return false;
         }
-
-        return $this->cacheProfile->shouldCacheResponse($response);
+        return $this->cache_profile->should_cache_response($response);
     }
-
-    public function shouldBypass(Request $request): bool
+    public function should_bypass(Request $request): bool
     {
-        if (! config('responsecache.bypass.header_name')) {
+        if (!config('responsecache.bypass.header_name')) {
             return false;
         }
-
-        if (! config('responsecache.bypass.header_value')) {
+        if (!config('responsecache.bypass.header_value')) {
             return false;
         }
-
         return $request->header(config('responsecache.bypass.header_name')) === (string) config('responsecache.bypass.header_value');
     }
-
-    public function cacheResponse(
-        Request $request,
-        Response $response,
-        ?int $lifetimeInSeconds = null,
-        array $tags = []
-    ): Response {
-        $this->taggedCache($tags)->put(
-            $this->hasher->getHashFor($request),
-            $response,
-            $lifetimeInSeconds ?? $this->cacheProfile->cacheLifetimeInSeconds($request),
-        );
-
+    public function cache_response(Request $request, Response $response, ?int $lifetime_in_seconds = null, array $tags = []): Response
+    {
+        $this->tagged_cache($tags)->put($this->hasher->get_hash_for($request), $response, $lifetime_in_seconds ?? $this->cache_profile->cache_lifetime_in_seconds($request));
         return $response;
     }
-
-    public function hasBeenCached(Request $request, array $tags = []): bool
+    public function has_been_cached(Request $request, array $tags = []): bool
     {
-        return config('responsecache.enabled') && $this->taggedCache($tags)->has($this->hasher->getHashFor($request));
+        return config('responsecache.enabled') && $this->tagged_cache($tags)->has($this->hasher->get_hash_for($request));
     }
-
-    public function getCachedResponseFor(Request $request, array $tags = []): Response
+    public function get_cached_response_for(Request $request, array $tags = []): Response
     {
-        return $this->taggedCache($tags)->get($this->hasher->getHashFor($request));
+        return $this->tagged_cache($tags)->get($this->hasher->get_hash_for($request));
     }
-
     public function clear(array $tags = []): bool
     {
-        event(new ClearingResponseCacheEvent());
-
-        $result = $this->taggedCache($tags)->clear();
-
-        $resultEvent = $result
-            ? new ClearedResponseCacheEvent()
-            : new ClearingResponseCacheFailedEvent();
-
-        event($resultEvent);
-
+        event(new Clearing_Response_Cache_Event());
+        $result = $this->tagged_cache($tags)->clear();
+        $result_event = $result ? new Cleared_Response_Cache_Event() : new Clearing_Response_Cache_Failed_Event();
+        event($result_event);
         return $result;
     }
-
     /**
      * @param  string[]  $tags
      */
     public function forget(string|array $uris, array $tags = []): self
     {
-        event(new ClearingResponseCacheEvent());
-
+        event(new Clearing_Response_Cache_Event());
         $uris = is_array($uris) ? $uris : [$uris];
-        $this->selectCachedItems()->forUrls($uris)->usingTags($tags)->forget();
-
-        event(new ClearedResponseCacheEvent());
-
+        $this->select_cached_items()->for_urls($uris)->using_tags($tags)->forget();
+        event(new Cleared_Response_Cache_Event());
         return $this;
     }
-
-    public function selectCachedItems(): CacheItemSelector
+    public function select_cached_items(): Cache_Item_Selector
     {
-        return new CacheItemSelector($this->hasher, $this->cache);
+        return new Cache_Item_Selector($this->hasher, $this->cache);
     }
-
     /**
      * Get a cached response using flexible/SWR (stale-while-revalidate) strategy.
      *
@@ -126,6 +87,6 @@ class ResponseCache
      */
     public function flexible(string $key, array $seconds, Closure $callback, array $tags = []): Response
     {
-        return $this->taggedCache($tags)->flexible($key, $seconds, $callback);
+        return $this->tagged_cache($tags)->flexible($key, $seconds, $callback);
     }
 }

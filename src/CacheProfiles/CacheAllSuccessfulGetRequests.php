@@ -1,67 +1,53 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Spatie\ResponseCache\CacheProfiles;
+declare (strict_types=1);
+namespace Spatie\Response_Cache\Cache_Profiles;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Spatie\ResponseCache\Enums\HttpMethod;
-use Symfony\Component\HttpFoundation\Response;
-
-class CacheAllSuccessfulGetRequests extends BaseCacheProfile
+use Spatie\Response_Cache\Enums\Http_Method;
+use Symfony\Component\Http_Foundation\Response;
+class Cache_All_Successful_Get_Requests extends Base_Cache_Profile
 {
-    public function shouldCacheRequest(Request $request): bool
+    public function should_cache_request(Request $request): bool
     {
         if ($request->ajax()) {
             return false;
         }
-
-        if ($this->isRunningInConsole()) {
+        if ($this->is_running_in_console()) {
             return false;
         }
-
-        return $request->isMethod(HttpMethod::Get->value);
+        return $request->is_method(Http_Method::Get->value);
     }
-
-    public function shouldCacheResponse(Response $response): bool
+    public function should_cache_response(Response $response): bool
     {
-        if (! $this->hasCacheableResponseCode($response)) {
+        if (!$this->has_cacheable_response_code($response)) {
             return false;
         }
-
-        if (! $this->hasCacheableContentType($response)) {
+        if (!$this->has_cacheable_content_type($response)) {
             return false;
         }
-
         return true;
     }
-
-    public function hasCacheableResponseCode(Response $response): bool
+    public function has_cacheable_response_code(Response $response): bool
     {
-        if ($response->isSuccessful()) {
+        if ($response->is_successful()) {
             return true;
         }
-
-        if ($response->isRedirection()) {
+        if ($response->is_redirection()) {
             return true;
         }
-
         return false;
     }
-
-    public function hasCacheableContentType(Response $response): bool
+    public function has_cacheable_content_type(Response $response): bool
     {
-        $contentType = $response->headers->get('Content-Type', '');
-
-        if (str_starts_with((string) $contentType, 'text/')) {
+        $content_type = $response->headers->get('Content-Type', '');
+        if (str_starts_with((string) $content_type, 'text/')) {
             return true;
         }
-
-        if (Str::contains($contentType, ['/json', '+json'])) {
+        if (Str::contains($content_type, ['/json', '+json'])) {
             return true;
         }
-
         return false;
     }
 }

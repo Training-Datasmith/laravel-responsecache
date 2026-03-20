@@ -1,15 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Spatie\Response_Cache\Configuration;
 
-namespace Spatie\ResponseCache\Configuration;
-
-class FlexibleCacheConfiguration
+class Flexible_Cache_Configuration
 {
-    public function __construct(
-        public int $lifetime,
-        public int $grace,
-        public array $tags = [],
-    ) {
+    public function __construct(public int $lifetime, public int $grace, public array $tags = [])
+    {
     }
 }

@@ -1,15 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Spatie\ResponseCache\Facades;
+declare (strict_types=1);
+namespace Spatie\Response_Cache\Facades;
 
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
-use Spatie\ResponseCache\CacheItemSelector\CacheItemSelector;
-use Symfony\Component\HttpFoundation\Response;
-
+use Spatie\Response_Cache\Cache_Item_Selector\Cache_Item_Selector;
+use Symfony\Component\Http_Foundation\Response;
 /**
  * @method static bool clear(array $tags = [])
  * @method static \Spatie\ResponseCache\ResponseCache forget(string|array $uris, array $tags = [])
@@ -22,9 +20,9 @@ use Symfony\Component\HttpFoundation\Response;
  * @method static CacheItemSelector selectCachedItems()
  * @method static Response flexible(string $key, array $seconds, Closure $callback, array $tags = [])
  */
-class ResponseCache extends Facade
+class Response_Cache extends Facade
 {
-    protected static function getFacadeAccessor(): string
+    protected static function get_facade_accessor(): string
     {
         return 'responsecache';
     }

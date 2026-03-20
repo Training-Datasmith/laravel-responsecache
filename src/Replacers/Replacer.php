@@ -1,20 +1,17 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Spatie\Response_Cache\Replacers;
 
-namespace Spatie\ResponseCache\Replacers;
-
-use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\Http_Foundation\Response;
 interface Replacer
 {
     /*
      * Prepare the initial response before it gets cached.
      */
-    public function prepareResponseToCache(Response $response): void;
-
+    public function prepare_response_to_cache(Response $response): void;
     /*
      * Replace any data you want in the cached response before it gets sent.
      */
-    public function replaceInCachedResponse(Response $response): void;
+    public function replace_in_cached_response(Response $response): void;
 }

@@ -1,14 +1,11 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Spatie\Response_Cache\Serializers;
 
-namespace Spatie\ResponseCache\Serializers;
-
-use Symfony\Component\HttpFoundation\Response;
-
+use Symfony\Component\Http_Foundation\Response;
 interface Serializer
 {
     public function serialize(Response $response): string;
-
-    public function unserialize(string $serializedResponse): Response;
+    public function unserialize(string $serialized_response): Response;
 }

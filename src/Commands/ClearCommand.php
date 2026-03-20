@@ -1,31 +1,24 @@
 <?php
 
-declare(strict_types=1);
-
-namespace Spatie\ResponseCache\Commands;
+declare (strict_types=1);
+namespace Spatie\Response_Cache\Commands;
 
 use Illuminate\Console\Command;
-use Spatie\ResponseCache\Facades\ResponseCache;
-
-class ClearCommand extends Command
+use Spatie\Response_Cache\Facades\Response_Cache;
+class Clear_Command extends Command
 {
     protected $signature = 'responsecache:clear {--url=}';
-
     protected $description = 'Clear the response cache';
-
     public function handle(): void
     {
         $this->clear();
-
         $this->info('Response cache cleared!');
     }
-
     protected function clear()
     {
         if ($url = $this->option('url')) {
-            return (new ResponseCache())->forget($url);
+            return (new Response_Cache())->forget($url);
         }
-
-        (new ResponseCache())->clear();
+        (new Response_Cache())->clear();
     }
 }
