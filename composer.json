@@ -40,12 +40,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\ResponseCache\\": "src"
+            "Spatie\\Response_Cache\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\ResponseCache\\Test\\": "tests"
+            "Spatie\\Response_Cache\\Test\\": "tests"
         }
     },
     "scripts": {
